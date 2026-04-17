@@ -13,14 +13,12 @@ screen.title("Pong")
 screen.tracer(0)
 
 
-
 r_paddle = Paddle((350, 0))
 l_paddle = Paddle((-350,0))
 
 ball = Ball((0,0))
 
-l_board = ScoreBoard((-50, 250))
-r_board = ScoreBoard((50, 250))
+scoreboard = ScoreBoard()
 
 
 
@@ -35,7 +33,7 @@ screen.onkeypress(l_paddle.move_down, "s".lower())
 game_is_on = True
 while game_is_on:
     screen.update()
-    time.sleep(0.09)
+    time.sleep(ball.move_speed)
     ball.move()
     if ball.ycor() > 280 or ball.ycor() < -280:
         ball.bounce_y()
@@ -43,15 +41,12 @@ while game_is_on:
         ball.bounce_x()
     if ball.xcor() > 380:
         ball.reset_ball()
-        ball.bounce_x()
-        l_board.increase_score()
+        scoreboard.l_point()
     if ball.xcor() < -380:
         ball.reset_ball()
-        ball.bounce_x()
-        r_board.increase_score()
+        scoreboard.r_point()
 
-
-    if r_board.score > 10 or l_board.score > 10:
+    if scoreboard.r_score > 10 or scoreboard.l_score > 10:
         game_is_on = False
 
 
